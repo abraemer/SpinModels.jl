@@ -2,5 +2,6 @@ using SpinModels
 using Test
 
 @testset "SpinModels.jl" begin
-    # Write your tests here.
+    include("basics.jl")
+    include("xxznumerics-consistency.jl")
 end

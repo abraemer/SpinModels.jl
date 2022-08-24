@@ -1,5 +1,12 @@
 module SpinModels
 
-# Write your package code here.
+import LinearAlgebra
+import SparseArrays
 
-end
+export X,Y,Z,XX,YY,ZZ,Hopp,FlipFlop,XXX,XXZ
+export nspins
+
+include("basics.jl")
+include("geometry.jl")
+
+end #module
