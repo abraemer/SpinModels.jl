@@ -1,0 +1,13 @@
+name = "SpinModels"
+uuid = "5a49041c-cc3f-4ac7-a79f-4c6c84dac572"
+authors = ["Adrian Braemer <11058200+abraemer@users.noreply.github.com> and contributors"]
+version = "0.1.0"
+
+[compat]
+julia = "1.8"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
