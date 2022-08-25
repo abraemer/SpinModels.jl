@@ -168,9 +168,9 @@ construct_COO!(I,J,V, t::Term) = _construct_COO!(I,J,V, Val(t.kind), t.coefficie
 # ZZ
 function _construct_COO!(I,J,V, ::Val{:ZZ}, coeff)
     N = size(coeff,1)
-    I[:] .= 1:2^N
-    J[:] .= 1:2^N
-    V[:] .= 0
+    I .= 1:2^N
+    J .= 1:2^N
+    V .= 0
     for i in 1:N
         for j in i+1:N
             _zcorrelator_values!(V, N, coeff[j,i]+coeff[i,j], i, j)
@@ -302,9 +302,9 @@ end
 
 function _construct_COO!(I,J,V, ::Val{:Z}, coeff)
     N = size(coeff,1)
-    I[:] .= 1:2^N
-    J[:] .= 1:2^N
-    V[:] .= 0
+    I .= 1:2^N
+    J .= 1:2^N
+    V .= 0
     for i in 1:N
         _z_field!(V, N, coeff[i], i)
     end
@@ -337,8 +337,6 @@ end
 ## X and Y
 function _construct_COO!(I,J,V, ::Val{:X}, coeff)
     N = size(coeff,1)
-    # I[:] .= 1:2^N
-    # J[:] .= 1:2^N
     length = 2^N
     at = 0
     for i in 1:N
@@ -352,8 +350,6 @@ end
 function _construct_COO!(I,J,V, ::Val{:Y}, coeff)
     # Y = im * [0 -1; 1 0]
     N = size(coeff,1)
-    # I[:] .= 1:2^N
-    # J[:] .= 1:2^N
     length = 2^N
     at = 0
     for i in 1:N
@@ -393,8 +389,6 @@ end
 
 function _construct_COO!(I,J,V, ::Val{:YY}, coeff)
     N = size(coeff,1)
-    # I[:] .= 1:2^N
-    # J[:] .= 1:2^N
     length = 2^N
     at = 0
     for i in 1:N
