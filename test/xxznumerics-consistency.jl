@@ -4,10 +4,13 @@
 @testset "XXZNumerics.jl consistency" begin
     import Pkg
     Pkg.add(url="https://github.com/abraemer/XXZNumerics.jl")
-    using XXZNumerics
+    import XXZNumerics
     using LinearAlgebra, Random, SparseArrays
     Ns = [7,8,9,10,11]
     Random.seed!(5)
+    σx = XXZNumerics.σx
+    σy = XXZNumerics.σy
+    σz = XXZNumerics.σz
 
     checkprecision(x) = @test sum(abs2, x) < 1e-15
 
@@ -15,7 +18,7 @@
         @testset "$opname" for (opname, xxznum_op, hm_op) in (("σx", σx, X()), ("σy", σy, Y()),("σz", σz, Z()))
             for N in Ns, i in 1:10 # 10 repetitions
                 J = rand(N)
-                checkprecision(sum(J[i]*single_spin_op(xxznum_op, i, N) for i in 1:N) .- sparse(J*hm_op))
+                checkprecision(sum(J[i]*XXZNumerics.single_spin_op(xxznum_op, i, N) for i in 1:N) .- sparse(J*hm_op))
             end
         end
     end
@@ -28,7 +31,7 @@
                 J = J'J # symmetrize
                 J[diagind(J)] .= 0
 
-                checkprecision(sum([2*J[i,j]*correlator(xxznum_op, i, j, N) for i in 1:N for j in i+1:N]) .- sparse(J*hm_op))
+                checkprecision(sum([2*J[i,j]*XXZNumerics.correlator(xxznum_op, i, j, N) for i in 1:N for j in i+1:N]) .- sparse(J*hm_op))
             end
         end
 
@@ -38,7 +41,7 @@
                 J = J'J # symmetrize
                 J[diagind(J)] .= 0
 
-                checkprecision(sum([J[i,j]*(correlator(σx, i, j, N)+correlator(σy, i,j, N)) for i in 1:N for j in i+1:N]) .- sparse(J*Hopp()))
+                checkprecision(sum([J[i,j]*(XXZNumerics.correlator(σx, i, j, N)+XXZNumerics.correlator(σy, i,j, N)) for i in 1:N for j in i+1:N]) .- sparse(J*Hopp()))
             end
         end
     end
@@ -50,7 +53,7 @@
             J[diagind(J)] .= 0
             Δ = randn()
 
-            checkprecision(xxzmodel(J, Δ) .- sparse(J/8*XXZ(Δ))) # /4 to convert pauli->spin-op, /2 due to double counting
+            checkprecision(XXZNumerics.xxzmodel(J, Δ) .- sparse(J/8*XXZ(Δ))) # /4 to convert pauli->spin-op, /2 due to double counting
         end
     end
 

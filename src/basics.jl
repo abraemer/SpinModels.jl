@@ -25,7 +25,7 @@ XXZ(Δ, J=1) = Hopp(2*J) + ZZ(Δ*J)
 
 Base.:(==)(t1::Term, t2::Term) = t1.kind == t2.kind && t1.coefficient == t2.coefficient
 Base.hash(t::Term, h) = hash(t.coefficient, hash(t.kind, h))
-# TODO comparision of SumOfTerms
+# TODO comparison of SumOfTerms
 # complication: order of terms should not matter
 # implement after deciding how to solve this
 # possibly after putting the termtypes into SumOfTerm type and enforcing some order among terms
