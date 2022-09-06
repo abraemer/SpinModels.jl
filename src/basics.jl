@@ -17,10 +17,34 @@ const ONEBODY_TERMS = [:X, :Y, :Z]
 const TWOBODY_TERMS = [:XX, :YY, :ZZ, :Hopp, :XXX]
 
 # Convenience methods
-for sym in (:XX,:YY,:ZZ,:Hopp,:X,:Y,:Z)
-    @eval $sym(J=1) = Term($(Meta.quot(sym)), J)
+for (sym, sym_name) in ((:X, "\\sigma_x^{(i)}"),
+                        (:Y, "\\sigma_y^{(i)}"),
+                        (:Z, "\\sigma_z^{(i)}"),
+                        (:XX, "\\sigma_x^{(i)} \\sigma_x^{(j)}"),
+                        (:YY, "\\sigma_y^{(i)} \\sigma_y^{(j)}"),
+                        (:ZZ, "\\sigma_z^{(i)} \\sigma_z^{(j)}"),
+                        (:Hopp, "\\sigma_+^{(i)} \\sigma_-^{(j)} + \\mathrm{h.c.}"))
+    @eval begin
+        @doc """
+            $($sym)(J=1)
+
+        Represents a ``$($sym_name)`` term.
+        """
+        $sym(J=1) = Term($(Meta.quot(sym)), J)
+    end
 end
+"""
+    FlipFlop(J=1)
+
+Same as [`Hopp`](@ref).
+"""
 FlipFlop = Hopp
+
+"""
+    XXZ(Δ, J=1)
+
+Represents the terms: `Hopp(2*J)+Δ*ZZ(J)`
+"""
 XXZ(Δ, J=1) = Hopp(2*J) + ZZ(Δ*J)
 
 Base.:(==)(t1::Term, t2::Term) = t1.kind == t2.kind && t1.coefficient == t2.coefficient
@@ -33,7 +57,7 @@ Base.hash(t::Term, h) = hash(t.coefficient, hash(t.kind, h))
 """
     _nbodyness(term)
 
-    Number of spins the term acts on.
+Number of spins the term acts on.
 """
 function _nbodyness end
 _nbodyness(term) = _nbodyness(Val(term.kind))
@@ -47,8 +71,8 @@ end
 """
     _check_array(dims, nbody)
 
-    Bad name. Raise an error if an array with size `dims` is not suitable as coefficient for an `nbody` term.
-    Generally a n-body term needs a n-dimensional array which axes are all equal.
+Bad name. Raise an error if an array with size `dims` is not suitable as coefficient for an `nbody` term.
+Generally a n-body term needs a n-dimensional array which axes are all equal.
 """
 function _check_array(dims, nbody)
 	length(dims) == nbody || error("Incompatible coefficient array with size $(dims) for $nbody-body term!")
@@ -76,10 +100,10 @@ Base.:*(::Term{<:AbstractArray}, ::AbstractArray) = error("Term already has a sp
 """
    _check_add_compatible(term1, term2)
 
-    Two terms can be added, if either:
-    1. both have *no* spatial information
-    2. both carry spatial information for the same number of spins
-    Otherwise error.
+Two terms can be added, if either:
+1. both have *no* spatial information
+2. both carry spatial information for the same number of spins
+Otherwise error.
 """
 function _check_add_compatible end
 _check_add_compatible(t1::Term{<:AbstractArray}, t2::Term{<:AbstractArray}) = nspins(t1) == nspins(t2) || error("Couplings shapes give different #spins: $(size(t1.coefficient)) vs $(size(t2.coefficient))")
@@ -96,18 +120,18 @@ Base.:-(t::Hamiltonian) = -1 * t
 Base.:-(t1::Hamiltonian, t2::Hamiltonian) = t1 + (-t2)
 
 # multiplication/division acts on each term separately
-Base.:*(x, t::SumOfTerms) = SumOfTerms(Ref(x) .* t.termlist)
+Base.:*(x::Union{Number, AbstractArray}, t::SumOfTerms) = SumOfTerms(Ref(x) .* t.termlist)
 Base.:*(t::SumOfTerms, x) = SumOfTerms(t.termlist .* Ref(x))
 Base.:/(t::SumOfTerms, x) = SumOfTerms(t.termlist ./ Ref(x))
 
-
+function nspins end
 """
     nspins(term)
     nspins(sum_of_terms)
 
-    Return #spins this (sum of) term(s) act(s) on. Error if no spatial structure was defined yet.
+Return the number of spins in the underlying geometry if that information was already provided.
 """
-function nspins end
+nspins(::Hamiltonian) = error("Not implemented! This should never happen!")
 nspins(::Term{<:Number}) = error("No spatial structure defined yet!")
 nspins(t::Term{<:AbstractArray}) = size(t.coefficient, 1)
 nspins(sot::SumOfTerms) = nspins(sot.termlist[1])
@@ -181,13 +205,13 @@ end
 """
 	    _zcorrelator_values!(V, N, Jij, i, j)
 
-	*ADD* to `V` the diagonal of Jᵢⱼ σzⁱσzʲ.
+*ADD* to `V` the diagonal of Jᵢⱼ σzⁱσzʲ.
 
-	# Parameters
-	 - `V` array of length 2^`N`. Will be mutated!
-	 - `N` number of sites in the system
-	 - `Jij` interaction strength
-	 - `i`,`j` sites to couple
+# Parameters
+- `V` array of length 2^`N`. Will be mutated!
+- `N` number of sites in the system
+- `Jij` interaction strength
+- `i`,`j` sites to couple
 """
 function _zcorrelator_values!(V, N, Jij, i, j)
     # 𝟙(sec1) ⊗ σz ⊗ 𝟙(sec2) ⊗ σz ⊗ 𝟙(sec3)

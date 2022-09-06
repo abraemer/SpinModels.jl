@@ -4,7 +4,6 @@
  - decide what to do about basis ordering
  - compare performance to more type-stable version
  - Add automated benchmarks for learning purposes?
- - Add Documenter.jl
  - Think about automatic meanfield functions
  - Register package?
  - ╔ (Optimization) Matrix construction

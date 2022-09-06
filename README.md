@@ -7,3 +7,8 @@
 
 Easy construction of all your favorite spin (half) models!
 
+## Usage Examples
+
+## Caveat: Basis ordering
+
+### Project onto symmetry sectors with: [SpinSymmetry.jl](https://github.com/abraemer/SpinSymmetry.jl)

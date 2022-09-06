@@ -25,7 +25,7 @@
 
         full_int = int(geom)
         nn_mask = full_int .>= 1
-        @test nn(geom) == nearest_neighbour_from_interactions(full_int)
+        @test nn(geom) == nearest_neighbor_from_interactions(full_int)
         @test nn(geom)[nn_mask] == full_int[nn_mask]
         @test all(nn(geom)[.!nn_mask] .== 0)
     end
