@@ -21,6 +21,9 @@ makedocs(
     ],
 )
 
+deploydocs(
+    repo = "github.com/abraemer/SpinModels.jl.git",
+)
 # Documenter can also automatically deploy documentation to gh-pages.
 # See "Hosting Documentation" and deploydocs() in the Documenter manual
 # for more information.
