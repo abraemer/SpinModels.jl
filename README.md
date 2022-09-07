@@ -12,7 +12,10 @@ Easy construction of all your favorite spin (half) models!
 See [documentation](https://abraemer.github.io/SpinModels.jl/dev/#Usage-examples).
 
 ## Caveat: Basis ordering
-
-TODO
+See [documentation](https://abraemer.github.io/SpinModels.jl/dev/#index_order)
 
 ### Project onto symmetry sectors with: [SpinSymmetry.jl](https://github.com/abraemer/SpinSymmetry.jl)
+
+## QoL TODOs
+Think about
+- Add one-body term without spatial structure to structured terms -> constant global field

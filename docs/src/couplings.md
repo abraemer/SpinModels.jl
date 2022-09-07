@@ -17,6 +17,6 @@ Then there are several modifiers, you can apply:
 You may use function like [`positions`](@ref), [`distance_matrix`](@ref) and [`nearest_neighbor_from_distances`](@ref) on geometry objects.
 
 ## Interaction
-The next step is to define the desired interaction type. Currently implemented are [`ConstantInteraction`](@ref) and [`PowerLaw`](@ref). You can also modify these to be nearest-neighbor only with [`NN`](@ref).
+The next step is to define the desired interaction type. Currently implemented are [`ConstantInteraction`](@ref) and [`PowerLaw`](@ref). You can also modify these to be nearest-neighbor only with [`NN`](@ref). There are quality of life overloads, that removes the need to use `ConstantInteraction(1)(geometry)` such that you can simply use the geometry like an interaction matrix in most scenarios. Please complain if this produces unintuitive behavior.
 
 Once you have defined your desired geometry and interaction you can get the final interaction matrix via [`interaction_matrix`](@ref) (or equivalently by calling the interaction object with the geometry).

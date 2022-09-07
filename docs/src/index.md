@@ -1,6 +1,6 @@
 # SpinModels.jl
 
-**Construct all of your favorite spin ``\frac{1}{2}`` models with ease.**
+**Construct all of your favorite spin-``\frac{1}{2}`` models with ease.**
 
 ## Recipe
 1. Define a coupling matrix like `J = PowerLaw(6)(Chain(10))`
@@ -28,7 +28,16 @@ A spin model's Hamiltonian consists of the sum of different terms, such as `XX` 
 For ease of use, there are several helpful structs and functions implemented to make constructing commonly used coupling types easy. They are organized into [Geometry](@ref)s and [Interaction](@ref)s. See [Coupling matrices](@ref).
 
 ## [A word on ordering the basis states](@id index_order)
-TODO
+The basis of a spin-``\frac{1}{2}`` model can be easily represented by numbers in binary, where each ``0`` denotes a ``|\uparrow\rangle`` and each ``1`` denotes a ``|\downarrow\rangle``. The 3-spin state ``|\uparrow\downarrow\uparrow\rangle`` for example gets the number ``010_2 = 2_{10}`` and as such is the third basis state (1-based counting).
+
+There are now two ways of organizing the basis with respect to the coupling matrices:
+The coupling ``J_{i,j}`` couples the ``i``th spin with the ``j``th spin, where the ``i``th spin is
+1. the spin at position ``i`` in the state vector (order like ``|1\rangle\otimes|2\rangle\otimes|3\rangle\ldots``)
+2. the spin corresponding to the ``i``th digit in the binary expansion with value ``2^{i-1}`` (order like ``\ldots|3\rangle\otimes|2\rangle\otimes\otimes|1\rangle``)
+
+I'd argue that for the sake of doing bit manipulation on the state numbers the latter is more convenient as one does not need to know the total amount of spins. Currently this library counts its spins from the **LEFT** corresponding to the **FORMER** (1.) option (due to legacy code reasons).
+
+Ultimately this issue boils down to the inconsistency in writing generally from left to right except when writing numbers, where the lowest valued place is on the right and increasing to the left.
 
 ## Full documentation
 ```@contents

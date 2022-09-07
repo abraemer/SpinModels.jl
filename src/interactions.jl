@@ -44,6 +44,10 @@ end
     ConstantInteraction(value)
 
 Represents a simple constant valued interaction.
+
+There are quality of life overloads, that removes the need to use
+`ConstantInteraction(1)(geometry)` such that you can simply use the geometry like an
+interaction matrix in most scenarios. Please complain if this produces unintuitive behavior.
 """
 struct ConstantInteraction{T} <: Interaction
     val::T
