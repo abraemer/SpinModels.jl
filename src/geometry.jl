@@ -150,7 +150,9 @@ _parent(gm::GeometryModifier) = gm.geometry
 Modifies the underlying `geometry` to respect the blockade condition namely all spins need to
 be at least `blockade` units apart. Positions are resampled at most `retries` times.
 
-Note: If you set `retries=0`, resampling will not stop until a valid configuration is found.
+!!! note
+
+    If you set `retries=0`, resampling will not stop until a valid configuration is found.
 """
 struct Blockaded{G} <: GeometryModifier{G}
     geometry::G
@@ -219,9 +221,13 @@ nearest_neighbor_from_distances(distance_mat, k=1) = nearest_neighbor_from_dista
 Set all but the `k` smallest distances from each column to `Inf`. `k` only counts *different* values!
 Thus `k=1` keeps only the closest distance per spin but allows to have the same distance multiple times.
 
-Note: The distance to itself is always ignored.
-Note: The resulting matrix won't necessarily be symmetric if nearest neighbors are ill-defined.
-See also: [`nearest_neighbor_from_interactions!`](@ref)
+!!! note
+
+    The distance to itself is always ignored.
+
+!!! note
+    The resulting matrix won't necessarily be symmetric if nearest neighbors are ill-defined.
+    See also: [`nearest_neighbor_from_interactions!`](@ref)
 """
 function nearest_neighbor_from_distances!(distance_mat, k=1)
     # select k+1 smallest distances

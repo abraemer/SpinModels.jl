@@ -42,7 +42,10 @@ for (sym, sym_name) in ((:XX, "\\sigma_x^{(i)} \\sigma_x^{(j)}"),
         Represents a ``$($sym_name)`` term. Multiply with a matrix J to get the term
         ``\\sum_{i\\neq j} J_{ij} $($sym_name) .``
 
-        Note: Two-body terms do 'double-counting' of the couplings meaning the sum runs over `i,j` independently and not `i < j`.
+        !!! note
+
+            Two-body terms do 'double-counting' of the couplings meaning the sum runs over
+            `i,j` independently and not `i < j`.
         """
         $sym(J=1) = Term($(Meta.quot(sym)), J)
     end

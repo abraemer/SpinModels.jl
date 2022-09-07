@@ -23,7 +23,9 @@ export NN
 Modify the geometry to only keep the `k` closest connections from each spin. Please see
 [`nearest_neighbor_from_distances!`](@ref) for further information.
 
-Note: This is **not** identical to [`NN(::SpinModels.Interaction)`](@ref) if the interaction is anisotropic.
+!!! note
+
+    This is **not** identical to [`NN(::SpinModels.Interaction)`](@ref) if the interaction is anisotropic.
 """
 NN(geom::Geometry, k=1) = NNGeometry(geom; k)
 
@@ -33,7 +35,9 @@ NN(geom::Geometry, k=1) = NNGeometry(geom; k)
 Modify the interaction to only keep the `k` strongest couplings from each spin. Please see
 [`nearest_neighbor_from_interactions!`](@ref) for further information.
 
-Note: This is **not** identical to [`NN(::SpinModels.Geometry)`](@ref) if the interaction is anisotropic.
+!!! note
+
+    This is **not** identical to [`NN(::SpinModels.Geometry)`](@ref) if the interaction is anisotropic.
 """
 NN(int::Interaction, k=1) = NNInteraction(int; k)
 

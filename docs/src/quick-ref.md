@@ -16,7 +16,9 @@ Current implemented are (`N` always denotes the total number of spins):
 - [`PBC`](@ref)`(geometry)`
 - [`NN`](@ref)`(geometry, k=1)`
 
-Note: The order of [`Blockaded`](@ref), [`PBC`](@ref) and [`NN`](@ref) is irrelevant. They sort them themselves.
+!!! note
+
+    The order of [`Blockaded`](@ref), [`PBC`](@ref) and [`NN`](@ref) is irrelevant. They sort them themselves.
 
 ## Interactions
 Currently implemented are
@@ -24,7 +26,9 @@ Currently implemented are
 - [`PowerLaw`](@ref)`(α)`
 - [`NN`](@ref)`(interaction, k=1)`
 
-Note: There are QoL overloads on Geometry that apply `ConstantInteraction(1)` automatically. Thus you should probably not need to use it directly. Please give feedback if that does unexpected things.
+!!! note
+
+    There are QoL overloads on Geometry that apply `ConstantInteraction(1)` automatically. Thus you should probably not need to use it directly. Please give feedback if that does unexpected things.
 
 ## Note about nearest neighbor (`NN`)
 For anisotropic interactions (i.e. all currently implemented ones) it does not matter whether you apply `NN` to the interaction or the geometry. In principle for isotropic interaction there will be a subtle difference:

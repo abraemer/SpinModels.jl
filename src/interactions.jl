@@ -99,8 +99,10 @@ nearest_neighbor_from_interactions(interaction_mat, k=1) = nearest_neighbor_from
 Set all but the `k` strongest couplings from each column to `0`. `k` only counts *different* values!
 Thus `k=1` keeps only the strongest couplings per spin but allows to have the same value multiple times.
 
-Note: The resulting matrix won't necessarily be symmetric if nearest neighbors are ill-defined.
-See also: [`nearest_neighbor_from_distances!`](@ref)
+!!! note
+
+    The resulting matrix won't necessarily be symmetric if nearest neighbors are ill-defined.
+    See also: [`nearest_neighbor_from_distances!`](@ref)
 """
 function nearest_neighbor_from_interactions!(interaction_mat, k=1)
     cutoffs = [sort!(unique(col); rev=true)[k] for col in eachcol(interaction_mat)] # k largest interactions
