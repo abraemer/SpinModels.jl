@@ -3,7 +3,7 @@
 ## Todo implementation
  - decide what to do about basis ordering
  - compare performance to more type-stable version
- - Add automated benchmarks for learning purposes?
+ - Add automated benchmarks (for learning purposes)?
  - Think about automatic meanfield functions
  - Register package?
  - ╔ (Optimization) Matrix construction
@@ -15,8 +15,8 @@
  - ╚ 
 
 ## Todo Documentation
- - Explain basis ordering! (after deciding)
- - Usage + examples (after implementing the geometry stuff)
+ - ~~Explain basis ordering! (after deciding)~~
+ - MORE Usage + examples ~~(after implementing the geometry stuff)~~
  - benchmarks vs. kron?
- - Mention SpinSymmetry.jl
+ - ~~Mention SpinSymmetry.jl~~
 

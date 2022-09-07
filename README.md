@@ -16,6 +16,7 @@ See [documentation](https://abraemer.github.io/SpinModels.jl/dev/#index_order)
 
 ### Project onto symmetry sectors with: [SpinSymmetry.jl](https://github.com/abraemer/SpinSymmetry.jl)
 
-## QoL TODOs
+## TODOs
 Think about
-- Add one-body term without spatial structure to structured terms -> constant global field
+- [QoL] Add one-body term without spatial structure to structured terms -> constant global field
+- Implement possibility of directly constructing only a specific symmetry sector
