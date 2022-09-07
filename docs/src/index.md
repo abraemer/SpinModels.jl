@@ -33,7 +33,7 @@ The basis of a spin-``\frac{1}{2}`` model can be easily represented by numbers i
 There are now two ways of organizing the basis with respect to the coupling matrices:
 The coupling ``J_{i,j}`` couples the ``i``th spin with the ``j``th spin, where the ``i``th spin is
 1. the spin at position ``i`` in the state vector (order like ``|1\rangle\otimes|2\rangle\otimes|3\rangle\ldots``)
-2. the spin corresponding to the ``i``th digit in the binary expansion with value ``2^{i-1}`` (order like ``\ldots|3\rangle\otimes|2\rangle\otimes\otimes|1\rangle``)
+2. the spin corresponding to the ``i``th digit in the binary expansion with value ``2^{i-1}`` (order like ``\ldots|3\rangle\otimes|2\rangle\otimes|1\rangle``)
 
 I'd argue that for the sake of doing bit manipulation on the state numbers the latter is more convenient as one does not need to know the total amount of spins. Currently this library counts its spins from the **LEFT** corresponding to the **FORMER** (1.) option (due to legacy code reasons).
 
