@@ -19,8 +19,19 @@ const TWOBODY_TERMS = [:XX, :YY, :ZZ, :Hopp, :XXX]
 # Convenience methods
 for (sym, sym_name) in ((:X, "\\sigma_x^{(i)}"),
                         (:Y, "\\sigma_y^{(i)}"),
-                        (:Z, "\\sigma_z^{(i)}"),
-                        (:XX, "\\sigma_x^{(i)} \\sigma_x^{(j)}"),
+                        (:Z, "\\sigma_z^{(i)}"))
+    @eval begin
+        @doc """
+            $($sym)(J=1)
+
+        Represents a ``$($sym_name)`` term. Multiply with a vector h to get the term
+        ``\\sum_i h_i $($sym_name) .``
+        """
+        $sym(J=1) = Term($(Meta.quot(sym)), J)
+    end
+end
+
+for (sym, sym_name) in ((:XX, "\\sigma_x^{(i)} \\sigma_x^{(j)}"),
                         (:YY, "\\sigma_y^{(i)} \\sigma_y^{(j)}"),
                         (:ZZ, "\\sigma_z^{(i)} \\sigma_z^{(j)}"),
                         (:Hopp, "\\sigma_+^{(i)} \\sigma_-^{(j)} + \\mathrm{h.c.}"))
@@ -28,11 +39,15 @@ for (sym, sym_name) in ((:X, "\\sigma_x^{(i)}"),
         @doc """
             $($sym)(J=1)
 
-        Represents a ``$($sym_name)`` term.
+        Represents a ``$($sym_name)`` term. Multiply with a matrix J to get the term
+        ``\\sum_{i\\neq j} J_{ij} $($sym_name) .``
+
+        Note: Two-body terms do 'double-counting' of the couplings meaning the sum runs over `i,j` independently and not `i < j`.
         """
         $sym(J=1) = Term($(Meta.quot(sym)), J)
     end
 end
+
 """
     FlipFlop(J=1)
 

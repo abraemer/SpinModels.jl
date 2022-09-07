@@ -2,6 +2,11 @@
 
 **Construct all of your favorite spin ``\frac{1}{2}`` models with ease.**
 
+## Recipe
+1. Define a coupling matrix like `J = PowerLaw(6)(Chain(10))`
+2. Add the relevant terms of your Hamiltonian and apply couplings like `H = J*(XX() + YY() + Δ*ZZ())`
+3. Convert to sparse/dense with `SparseArrays.sparse(H)`/`LinearAlgebra.Matrix(H)`
+
 ## Usage examples
 The (standard) MBL Hamiltonian ``\hat{H} = J\sum_i \left(\sigma_+^{(i)}\sigma_-^{(j)} + \sigma_-^{(i)}\sigma_+^{(j)} + \Delta \sigma_z^{(i)}\sigma_z^{(j)}\right) + \sum_i h_i \sigma_z^{(i)}`` could be constructed like so:
 ```julia

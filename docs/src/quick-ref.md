@@ -1,6 +1,7 @@
 # Quick reference
 
 ## Terms
+Add terms together to define the structure of your Hamiltonian and multiply with constants and coupling matrices (only once!) to set up a concrete realization.
 - [`X`](@ref)`(h)`, [`Y`](@ref)`(h)` and [`Z`](@ref)`(h)` stand for ``\sum_i h_i \sigma_\alpha^{(i)},`` where ``\alpha`` is ``x``, ``y`` or ``z``.
 - [`XX`](@ref)`(J)`, [`YY`](@ref)`(J)` and [`ZZ`](@ref)`(J)` stand for ``\sum_{i,j} J_{i,j} \sigma_\alpha^{(i)}\sigma_\alpha^{(j)},``
 where ``\alpha`` is ``x``, ``y`` or ``z``.
@@ -16,6 +17,8 @@ Current implemented are (`N` always denotes the total number of spins):
 - [`PBC`](@ref)`(geometry)`
 - [`NN`](@ref)`(geometry, k=1)`
 
+Note: The order of [`Blockaded`](@ref), [`PBC`](@ref) and [`NN`](@ref) is irrelevant. They sort them themselves.
+
 ## Interactions
 Currently implemented are
 - [`ConstantInteraction`](@ref)`(value)`
@@ -23,3 +26,6 @@ Currently implemented are
 - [`NN`](@ref)`(interaction, k=1)`
 
 ## Note about nearest neighbor (`NN`)
+For anisotropic interactions (i.e. all currently implemented ones) it does not matter whether you apply `NN` to the interaction or the geometry. In principle for isotropic interaction there will be a subtle difference:
+- `NN` on geometry is based on distances and will remove all but the `k`smallest distances
+- `NN` on interactions is based on coupling strength and will remove all but the `k`strongest couplings
