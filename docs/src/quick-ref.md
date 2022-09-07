@@ -31,6 +31,6 @@ Currently implemented are
     There are QoL overloads on Geometry that apply `ConstantInteraction(1)` automatically. Thus you should probably not need to use it directly. Please give feedback if that does unexpected things.
 
 ## Note about nearest neighbor (`NN`)
-For anisotropic interactions (i.e. all currently implemented ones) it does not matter whether you apply `NN` to the interaction or the geometry. In principle for isotropic interaction there will be a subtle difference:
+For isotropic interactions (i.e. all currently implemented ones) it does not matter whether you apply `NN` to the interaction or the geometry. In principle for anisotropic interaction there will be a subtle difference:
 - `NN` on geometry is based on distances and will remove all but the `k`smallest distances
 - `NN` on interactions is based on coupling strength and will remove all but the `k`strongest couplings
