@@ -20,3 +20,4 @@ See [documentation](https://abraemer.github.io/SpinModels.jl/dev/#index_order)
 Think about
 - [QoL] Add one-body term without spatial structure to structured terms -> constant global field
 - Implement possibility of directly constructing only a specific symmetry sector
+- Convert the SumOfTerm direftly to a LinearOperator, which just represents the action and does not construct a matrix? Combine also with SymmetrizedBasis from SpinSymmetries.jl?
