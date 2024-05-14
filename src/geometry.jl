@@ -73,6 +73,9 @@ end
 
 abstract type BaseGeometry <: Geometry end
 
+_distance(::BaseGeometry, p1, p2) = _euclidean(p1,p2)
+
+
 ### Implementation: Chain
 """
     Chain(L; spacing=1)
@@ -88,7 +91,6 @@ end
 
 nspins(c::Chain) = c.L
 positions(c::Chain) = (1:nspins(c))' .* c.spacing
-_distance(::Chain, p1, p2) = _euclidean(p1,p2)
 
 
 ### Implementation: NoisyChain
@@ -108,7 +110,29 @@ end
 
 nspins(c::NoisyChain) = c.L
 positions(c::NoisyChain; rng=Random.GLOBAL_RNG) = ((1:nspins(c)) .* c.spacing .+ c.σ .* (rand(rng, nspins(c)) .- 0.5))'
-_distance(::NoisyChain, p1, p2) = _euclidean(p1,p2)
+
+
+### Implementation: PartiallyFilledChain
+
+"""
+    PartiallyFilledChain(numspins, numsites; spacing=1)
+
+Represents a 1D chain of `L` sites where `N` spins are placed randomly.
+Sites are `spacing` units apart.
+"""
+struct PartiallyFilledChain{T} <: BaseGeometry
+    numspins::Int
+    numsites::Int
+    spacing::T
+    function PartiallyFilledChain(numspins, numsites,; spacing=1)
+        numspins >= 0 || error("Number of spins must be positive. Got $numspins.")
+        numspins <= numsites || error("PartiallyFilledChain needs to have more sites than spins. Did you mix up the arguments? It's PartiallyFilledChain(numspins, numsites)")
+        new{typeof(spacing)}(numspins, numsites, spacing)
+    end
+end
+
+nspins(c::PartiallyFilledChain) = c.numspins
+positions(c::PartiallyFilledChain; rng=Random.GLOBAL_RNG) = sort!(shuffle(rng, c.spacing*(1:c.numsites))[1:c.numspins])'
 
 
 ### Implementation: Box
@@ -125,7 +149,7 @@ end
 
 nspins(c::Box) = c.N
 positions(b::Box; rng=Random.GLOBAL_RNG) = rand(rng, length(b.dims), nspins(b)) .* b.dims
-_distance(::Box, p1, p2) = _euclidean(p1,p2)
+
 
 ############################################
 #### GeometryModifier

@@ -4,6 +4,7 @@
 Chain
 Box
 NoisyChain
+PartiallyFilledChain
 Blockaded
 PBC
 NN(::SpinModels.Geometry)

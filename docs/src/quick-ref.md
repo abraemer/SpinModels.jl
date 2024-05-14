@@ -11,7 +11,8 @@ Add terms together to define the structure of your Hamiltonian and multiply with
 Current implemented are (`N` always denotes the total number of spins):
 - [`Chain`](@ref)`(N)`
 - [`Box`](@ref)`(N, dims)`
-- [`NoisyChain`](@ref)`(N, σ, spacing=1)`
+- [`NoisyChain`](@ref)`(N, σ; spacing=1)`
+- [`PartiallyFilledChain`](@ref)`(numspins, numsites; spacing=1)`
 - [`Blockaded`](@ref)`(geometry; retries=1000, blockade=1.0)`
 - [`PBC`](@ref)`(geometry)`
 - [`NN`](@ref)`(geometry, k=1)`

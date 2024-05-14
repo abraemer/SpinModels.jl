@@ -8,7 +8,7 @@ export nspins
 include("basics.jl")
 
 export positions, distance_matrix, nearest_neighbor_from_distances, nearest_neighbor_from_distances!
-export Box, Chain, NoisyChain, Blockaded, PBC
+export Box, Chain, NoisyChain, PartiallyFilledChain, Blockaded, PBC
 include("geometry.jl")
 
 export interaction_matrix, nearest_neighbor_from_interactions, nearest_neighbor_from_interactions!

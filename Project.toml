@@ -1,7 +1,7 @@
 name = "SpinModels"
 uuid = "88a46c5d-b766-4f50-a717-9e2d8739cc37"
 authors = ["Adrian Braemer <11058200+abraemer@users.noreply.github.com> and contributors"]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
