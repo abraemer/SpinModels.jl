@@ -31,8 +31,8 @@
         @test positions(nc1) ≈ positions(c1)
         @test positions(nc2) ≈ positions(c2)
 
-        @test distance_matrix(c1) ≈ distance_matrix(c1)
-        @test distance_matrix(c2) ≈ distance_matrix(c2)
+        @test distance_matrix(nc1) ≈ distance_matrix(c1)
+        @test distance_matrix(nc2) ≈ distance_matrix(c2)
 
 
         σ = 2
@@ -53,6 +53,42 @@
         # @info mean(varpos)
         @test mean(meanpos .- reference_positions) < σ/2 / 10000 / nspins(nc3)
         @test 0.9*σexpected < mean(varpos) < 1.1*σexpected
+    end
+
+    @testset "PartiallyFilledChain" begin
+        for i in -4:4
+            @test_throws ErrorException PartiallyFilledChain(5,i)
+        end
+        @test_throws ErrorException PartiallyFilledChain(-5,5)
+
+        # compare no noise to normal chain
+        pfc1 = PartiallyFilledChain(5, 5)
+        pfc2 = PartiallyFilledChain(5, 5; spacing=2)
+        c1 = Chain(5)
+        c2 = Chain(5;spacing=2)
+
+        @test nspins(pfc1) == 5
+        @test nspins(pfc2) == 5
+
+        @test positions(pfc1) ≈ positions(c1)
+        @test positions(pfc2) ≈ positions(c2)
+
+        @test distance_matrix(pfc1) ≈ distance_matrix(c1)
+        @test distance_matrix(pfc2) ≈ distance_matrix(c2)
+
+        for (N,L) in [(10,10),(10,50),(10,200),(10,1000)]
+            geom = PartiallyFilledChain(N,L)
+            @test all(allunique, positions(geom) for _ in 1:100)
+        end
+
+        SHOTS = 1000
+        pfc3 = PartiallyFilledChain(5, 10)
+        data = sort!(mapreduce(vec, vcat, positions(pfc3) for _ in 1:SHOTS))
+        @test 1:10 == unique(data) # all positions where generated
+        counts = diff(unique(i->data[i], eachindex(data)))
+        reference_value = SHOTS*pfc3.numspins/pfc3.numsites
+        deviation = sqrt(reference_value) # shot noise is ~√N
+        @test all(reference_value-2deviation .< counts .< reference_value+2deviation)
     end
 
     @testset "Box" begin
