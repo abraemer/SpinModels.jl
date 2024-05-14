@@ -5,6 +5,7 @@
 ConstantInteraction
 PowerLaw
 NN(::SpinModels.Interaction)
+NN
 ```
 
 ## Functions
